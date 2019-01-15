@@ -6,8 +6,11 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
+import com.example.asus.whatsappcontacts.Adapters.ContactsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                             }
+                            setuprecyclerview(contacts);
                         }
                     } while (contactCursor.moveToNext());
                     contactCursor.close();
@@ -85,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("size", " WhatsApp contact size :  " + contacts.size());
         }
+
+    private void setuprecyclerview(List<Contact> contacts) {
+        ContactsAdapter myAdapter = new ContactsAdapter(this,contacts) ;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(myAdapter);
+    }
 
     }
 
