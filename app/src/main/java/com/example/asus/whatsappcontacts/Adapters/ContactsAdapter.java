@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.asus.whatsappcontacts.Contact;
 import com.example.asus.whatsappcontacts.R;
 
@@ -22,7 +24,7 @@ import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyViewHolder> implements View.OnClickListener {
 
-
+    RequestOptions options ;
     private Context mContext ;
     private List<Contact> mData ;
 
@@ -32,6 +34,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
         this.mContext = mContext;
         this.mData = lst;
+        options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ayomi)
+                .error(R.drawable.ayomi);
 
 
     }
@@ -66,8 +72,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
         holder.name.setText(mData.get(position).getName());
         holder.number.setText(mData.get(position).getNumber());
-        // load image from the internet using Glide
-        //Glide.with(mContext).load(mData.get(position).getImgUrl()).apply(options).into(holder.FilmImg);
+        if (mData.get(position).getURI() != null) {
+            holder.contactImg.setImageURI(mData.get(position).getURI());
+        }else {
+
+            holder.contactImg.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ayomi));
+        }
 
     }
 
@@ -85,6 +95,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
         TextView name,number;
         LinearLayout view_container;
+        ImageView contactImg;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +103,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
             name = itemView.findViewById(R.id.name);
             number = itemView.findViewById(R.id.number);
+            contactImg = itemView.findViewById(R.id.img);
 
 
         }
