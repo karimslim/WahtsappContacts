@@ -6,22 +6,34 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private Context context ;
+    private List<Contact> contacts;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.context = context;
+        getSupportActionBar().hide();
+        contacts = new ArrayList<>();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        getWhatsappContacts();
+
+    }
+
+
+
+
+    private void getWhatsappContacts() {
 
         ContentResolver cr = getApplicationContext().getContentResolver();
 
-//RowContacts for filter Account Types
         Cursor contactCursor = cr.query(
                 ContactsContract.RawContacts.CONTENT_URI,
                 new String[]{ContactsContract.RawContacts._ID,
@@ -30,10 +42,8 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{"com.whatsapp"},
                 null);
 
-//ArrayList for Store Whatsapp Contact
-        ArrayList<String> myWhatsappContacts = new ArrayList<>();
 
-        if (contactCursor != null) {
+            if (contactCursor != null) {
             if (contactCursor.getCount() > 0) {
                 if (contactCursor.moveToFirst()) {
                     do {
@@ -57,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
                                 String number = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
                                 whatsAppContactCursor.close();
+                                Contact c = new Contact(id, number, name);
+                                contacts.add(c);
 
-                                //Add Number to ArrayList
-                                myWhatsappContacts.add(number);
-                                Log.d("id contact"," WhatsApp contact id  :  " + id);
-                                Log.d("name contact"," WhatsApp contact id  :  " + name);
-                                Log.d("number contact"," WhatsApp contact id  :  " + number);
+                                Log.d("id contact", " WhatsApp contact id  :  " + c.getId());
+                                Log.d("name contact", " WhatsApp contact id  :  " + c.getName());
+                                Log.d("number contact", " WhatsApp contact id  :  " + c.getNumber());
 
 
                             }
@@ -73,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Log.d("size", " WhatsApp contact size :  " + myWhatsappContacts.size());
+        Log.d("size", " WhatsApp contact size :  " + contacts.size());
+        }
 
     }
-}
+
