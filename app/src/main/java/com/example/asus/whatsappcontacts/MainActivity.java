@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 null);
 
 
-            if (contactCursor != null) {
+        if (contactCursor != null) {
             if (contactCursor.getCount() > 0) {
                 if (contactCursor.moveToFirst()) {
                     do {
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
                                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                     new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
                                             ContactsContract.CommonDataKinds.Phone.NUMBER,
-                                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                                            ContactsContract.CommonDataKinds.Photo.PHOTO_URI},
+                                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                                            },
                                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                                     new String[]{whatsappContactId}, null);
 
@@ -70,28 +70,13 @@ public class MainActivity extends AppCompatActivity {
                                 String id = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
                                 String name = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                                 String number = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                                if (whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO_URI)) != null){
-                                    String uriImg = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO_URI));
-                                    Uri contactImgURI = Uri.parse(uriImg);
-                                    Contact c = new Contact(id, number, name,contactImgURI);
-                                    contacts.add(c);
-                                    whatsAppContactCursor.close();
-                                    Log.d("id contact", " WhatsApp contact id  :  " + c.getId());
-                                    Log.d("name contact", " WhatsApp contact id  :  " + c.getName());
-                                    Log.d("number contact", " WhatsApp contact id  :  " + c.getNumber());
-                                    Log.d("img uri", " WhatsApp contact id  :  " + c.getURI());
-                                }
-                                else {
+
                                     whatsAppContactCursor.close();
                                     Contact c = new Contact(id, number, name);
                                     contacts.add(c);
                                     Log.d("id contact", " WhatsApp contact id  :  " + c.getId());
                                     Log.d("name contact", " WhatsApp contact id  :  " + c.getName());
                                     Log.d("number contact", " WhatsApp contact id  :  " + c.getNumber());
-
-                                }
-
-
 
 
                             }
@@ -104,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.d("size", " WhatsApp contact size :  " + contacts.size());
-        }
+    }
 
     private void setuprecyclerview(List<Contact> contacts) {
         ContactsAdapter myAdapter = new ContactsAdapter(this,contacts) ;
@@ -112,5 +97,5 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
     }
 
-    }
+}
 

@@ -5,21 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.asus.whatsappcontacts.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#7D9293">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Whatsapp Contacts"
-        android:textStyle="bold"
-        android:textColor="#5c5c3d"
+        android:text="Contacts"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#FFFFFF"
         android:layout_gravity="center"
-        android:textSize="30dp"/>
+        android:layout_marginTop="5dp"
+        android:textSize="25dp"
+       />
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerview">
+        android:id="@+id/recyclerview"
+        android:layout_marginTop="5dp">
 
 
     </android.support.v7.widget.RecyclerView>
