@@ -1,1 +1,1 @@
-Cette Application permet de lister tous les contacts Whatsapp d'un utilisateur dans une RecyclerView. 
+Cette Application liste les contacts Whatsapp de l'utilisateur dans une RecyclerView personnalisée. 
